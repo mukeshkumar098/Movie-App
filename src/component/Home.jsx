@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import Pagination from './Pagination';
 import ReactPaginate from 'react-paginate';
+import Header from './Header';
 
 const Home = () => {
     const [data, setData] = useState([]);
 
     const getData = async () => {
         try {
-            let res = await fetch("http://localhost:3000/movie?_page=1&_limit=20")
+            let res = await fetch("https://dummyapi.online/api/movies")
             res = await res.json()
             setData(res);
 
@@ -22,35 +23,37 @@ const Home = () => {
         getData();
     }, [])
 
-    const fetchMovieData = async (currentPage) => {
-        let response = await fetch(`http://localhost:3000/movie?_page= ${currentPage}&_limit=10`)
-        response = await response.json();
-        return response;
-    }
+    // const fetchMovieData = async (currentPage) => {
+    //     let response = await fetch(`http://localhost:3000/movie?_page= ${currentPage}&_limit=10`)
+    //     response = await response.json();
+    //     return response;
+    // }
 
-    const handelPageClick = async (item) => {
-        let currentPage = item.selected + 1;
-        const movieData = await fetchMovieData(currentPage);
-        setData(movieData)
-        console.log(item.selected);
+    // const handelPageClick = async (item) => {
+    //     let currentPage = item.selected + 1;
+    //     const movieData = await fetchMovieData(currentPage);
+    //     setData(movieData)
+    //     console.log(item.selected);
 
-    }
+    // }
+    console.log("nsdjkamndbaskdabb aahdadakjadjjjk",data);
+    
     return (
         <>
-
-            <div className='flex justify-center gap-2 flex-wrap py-7'>
+           <Header data={data}/>
+            <div className='flex justify-center gap-2 flex-wrap'>
                 {data.map((item, index) => {
                     return (
                         <>
 
-                            <div key={index} className=' border  my-2 shadow-xl shadow-gray'>
+                            <div key={index} className=' border  shadow-xl shadow-gray'>
 
-                                <div className='w-48 '>
+                                <div className='w-44 '>
                                     {/* <img src={item.image} alt="moves" /> */}
                                     <img className='object-contain' src="photo.jpg" alt="" />
                                 </div>
                                 <div className='relative'>
-                                    <p className='w-32  absolute z-20 -top-3 text-white text-sm px-1 py-1 bg-sky-600'>best movie 2024</p>
+                                    <p className='w-32  absolute -top-3 text-white text-sm px-1 py-1 bg-sky-600'>best movie 2024</p>
                                     <p className='pt-3 absolute -top-10 text-sm text-white right-2'>{item?.rating}</p>
                                     <a href={item?.imdb_url}></a>
                                 </div>
@@ -67,7 +70,7 @@ const Home = () => {
                 })}
 
             </div>
-            <ReactPaginate
+            {/* <ReactPaginate
                 previousLabel={"prev"}
                 nextLabel={"next"}
                 pageCount={100}
@@ -80,7 +83,7 @@ const Home = () => {
                 previousClassName='bg-orange-300 px-2 py-2 text-[9px]'
                 previousLinkClassName=' '
                 nextClassName='bg-orange-300 px-2 py-2 text-[10px]'
-            />
+            /> */}
 
         </>
     )
